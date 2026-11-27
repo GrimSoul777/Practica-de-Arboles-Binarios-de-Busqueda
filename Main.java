@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
-    static Scanner sc = new Scanner(System.in);
+    public static Scanner sc = new Scanner(System.in);
     static ABB arbol = new ABB();
 
     public static void main(String[] args){
@@ -108,7 +108,9 @@ public class Main {
                     if (arbol.R == null) {
                         System.out.println("\nEl arbol esta vacio.");
                     } else {
-                        
+                        System.out.println("Ingresa la palabra que deseas modificar:");
+                        String modificar = sc.nextLine();
+                        arbol.Modificar(arbol.R, modificar);
                     }
                 break;
 

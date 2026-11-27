@@ -63,7 +63,14 @@ public class ABB {
     }
 
     public void Modificar(Nodo N, String v){
-
+        Nodo E = Eliminar(N, v);
+        if (E == null) {
+            System.out.println("El nodo no existe");
+        } else {
+            System.out.println("Ingrese el nuevo valor: ");
+            String nuevoValor = Main.sc.nextLine();
+            Insertar(R, nuevoValor);
+        }
     }
 
     public int Buscar(Nodo N, String v, int nivel){
