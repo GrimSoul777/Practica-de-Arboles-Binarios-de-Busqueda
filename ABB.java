@@ -5,8 +5,16 @@ public class ABB {
         this.R = null;
     }
 
-    public void Insertar(Nodo N, String v){
+    public Nodo Insertar(Nodo N, String v){
+        if (N == null) {
+            N = new Nodo(v);
+        } else if (v.compareToIgnoreCase(N.info) < 0) {
+            N.izq = Insertar(N.izq, v);
+        } else {
+            N.der = Insertar(N.der, v);
+        }
 
+        return N;
     }
 
     public void Eliminar(Nodo N, String v){
@@ -17,8 +25,16 @@ public class ABB {
 
     }
 
-    public void Buscar(Nodo N, String v){
-
+    public int Buscar(Nodo N, String v, int nivel){
+        if (N == null) {
+            return -1;
+        } else if (v.equalsIgnoreCase(N.info)) {
+            return nivel;
+        } else if (v.compareToIgnoreCase(N.info) < 0) {
+            return Buscar(N.izq, v, nivel + 1);
+        } else {
+            return Buscar(N.der, v, nivel + 1);
+        }
     }
 
     public void PreOrder(Nodo N){
