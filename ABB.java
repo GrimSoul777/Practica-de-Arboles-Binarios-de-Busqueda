@@ -17,49 +17,49 @@ public class ABB {
         return N;
     }
 
-    public Eliminar(Nodo N, String v){
+    public Nodo Eliminar(Nodo N, String v){
         Nodo E = BuscarNodo(N, v);
         if (E == null) {
             return null;
         }
 
         //dos hijos
-        if (E.izq != null && E.der !=null){  
+        if (E.izq != null && E.der != null) {
             Nodo PT = E;
             Nodo T = E.izq;
-            while (T.der != null){
-                PT= T;
-                T= T.der;
+            while (T.der != null) {
+                PT = T;
+                T = T.der;
             }
-            String temp= E.info;
-            E.info= T.info;
-            T.info= temp;
-            //T tiene mx un hijo a la izq
-            if(PT == E){
+            String temp = E.info;
+            E.info = T.info;
+            T.info = temp;
+            //T tiene max un hijo a la izq
+            if (PT == E) {
                 PT.izq = T.izq;
             } else {
-                PT.der= T.izq;
+                PT.der = T.izq;
             }
-            T.izq= null;
-            return T;   
+            T.izq = null;
+            return T;
         }
 
         //sin hijos o con un hijo
-        Nodo hijo = (E.izq!= null)? E.izq:E.der;    //null si es hoja
-        if (E== R){
-            R= hijo;
-        } else {
-            Nodo P= BuscarPadre(R, v);
-            if (P.izq == E){
-                P.izq= hijo;
-            } else {
-                P.der= hijo;
-            }
-            E.izq= null;
-            E.der= null;
-            return E;
-        }
+        Nodo hijo = (E.izq != null) ? E.izq : E.der;   //null si es hoja
 
+        if (E == R) {
+            R = hijo;
+        } else {
+            Nodo P = BuscarPadre(R, v);
+            if (P.izq == E) {
+                P.izq = hijo;
+            } else {
+                P.der = hijo;
+            }
+        }
+        E.izq = null;
+        E.der = null;
+        return E;
     }
 
     public void Modificar(Nodo N, String v){

@@ -1,4 +1,3 @@
-import java.net.SocketAddress;
 import java.util.Scanner;
 
 public class Main {
@@ -94,7 +93,7 @@ public class Main {
                     } else {
                         System.out.println("Ingresa la palabra que deseas eliminar:");
                         String elim = sc.nextLine();
-                        if (arbol.Eliminar(arbol.E, elim) != null){
+                        if (arbol.Eliminar(arbol.R, elim) != null){
                             System.out.println("\nPalabra eliminada correctamente.");
                         }
                         else {
