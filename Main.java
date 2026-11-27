@@ -1,3 +1,4 @@
+import java.net.SocketAddress;
 import java.util.Scanner;
 
 public class Main {
@@ -91,6 +92,14 @@ public class Main {
                     if (arbol.R == null) {
                         System.out.println("\nEl arbol esta vacio.");
                     } else {
+                        System.out.println("Ingresa la palabra que deseas eliminar:");
+                        String elim = sc.nextLine();
+                        if (arbol.Eliminar(arbol.E, elim) != null){
+                            System.out.println("\nPalabra eliminada correctamente.");
+                        }
+                        else {
+                            System.out.println("\nLa palabra NO existe en el arbol (no se elimino nada)");
+                        }
 
                     }
                 break;

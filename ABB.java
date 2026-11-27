@@ -17,7 +17,48 @@ public class ABB {
         return N;
     }
 
-    public void Eliminar(Nodo N, String v){
+    public Eliminar(Nodo N, String v){
+        Nodo E = BuscarNodo(N, v);
+        if (E == null) {
+            return null;
+        }
+
+        //dos hijos
+        if (E.izq != null && E.der !=null){  
+            Nodo PT = E;
+            Nodo T = E.izq;
+            while (T.der != null){
+                PT= T;
+                T= T.der;
+            }
+            String temp= E.info;
+            E.info= T.info;
+            T.info= temp;
+            //T tiene mx un hijo a la izq
+            if(PT == E){
+                PT.izq = T.izq;
+            } else {
+                PT.der= T.izq;
+            }
+            T.izq= null;
+            return T;   
+        }
+
+        //sin hijos o con un hijo
+        Nodo hijo = (E.izq!= null)? E.izq:E.der;    //null si es hoja
+        if (E== R){
+            R= hijo;
+        } else {
+            Nodo P= BuscarPadre(R, v);
+            if (P.izq == E){
+                P.izq= hijo;
+            } else {
+                P.der= hijo;
+            }
+            E.izq= null;
+            E.der= null;
+            return E;
+        }
 
     }
 
@@ -34,6 +75,34 @@ public class ABB {
             return Buscar(N.izq, v, nivel + 1);
         } else {
             return Buscar(N.der, v, nivel + 1);
+        }
+    }
+
+    public Nodo BuscarNodo(Nodo N, String v) {
+        if (N != null) {
+            int c = v.compareToIgnoreCase(N.info);
+            if (c == 0) {
+                return N;
+            }
+            if (c < 0) {
+                return BuscarNodo(N.izq, v);
+            }
+            return BuscarNodo(N.der, v);
+        }
+        return null;
+    }
+
+    public Nodo BuscarPadre(Nodo N, String v) {
+        if (v.compareToIgnoreCase(N.info) < 0) {
+            if (v.equalsIgnoreCase(N.izq.info)) {
+                return N;
+            }
+            return BuscarPadre(N.izq, v);
+        } else {
+            if (v.equalsIgnoreCase(N.der.info)) {
+                return N;
+            }
+            return BuscarPadre(N.der, v);
         }
     }
 
