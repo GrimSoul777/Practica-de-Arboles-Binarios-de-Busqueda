@@ -20,48 +20,89 @@ public class ABB {
     public Nodo Eliminar(Nodo N, String v){
         Nodo E = BuscarNodo(N, v);
         if (E == null) {
-            return null;
+            return E;
         }
 
-        //dos hijos
-        if (E.izq != null && E.der != null) {
-            Nodo PT = E;
-            Nodo T = E.izq;
-            while (T.der != null) {
-                PT = T;
-                T = T.der;
-            }
-            String temp = E.info;
-            E.info = T.info;
-            T.info = temp;
-            //T tiene max un hijo a la izq
-            if (PT == E) {
-                PT.izq = T.izq;
-            } else {
-                PT.der = T.izq;
-            }
-            T.izq = null;
-            return T;
-        }
-
-        //sin hijos o con un hijo
-        Nodo hijo = (E.izq != null) ? E.izq : E.der;   //null si es hoja
-
+        //ELIMINAR LA RAIZ
         if (E == R) {
-            R = hijo;
-        } else {
-            Nodo P = BuscarPadre(R, v);
-            if (P.izq == E) {
-                P.izq = hijo;
-            } else {
-                P.der = hijo;
+            if (E.izq != null && E.der == null) {
+                R = E.izq;
+                E.izq = null;
+                return E;
+            }
+
+            if (E.izq == null && E.der != null) {
+                R = E.der;
+                E.der = null;
+                return E;
+            }
+
+            if (E.izq == null && E.der == null) {
+                R = null;
+                return E;
             }
         }
-        E.izq = null;
-        E.der = null;
-        return E;
-    }
 
+        //NODO SIN HIJOS
+        if (E.izq == null && E.der == null) {
+            Nodo P = BuscarPadre(R, v);
+
+            if (P.izq == E) {
+                P.izq = null;
+            } else {
+                P.der = null;
+            }
+            return E;
+        }
+
+        //NODO CON HIJO DERECHO
+        if (E.izq == null && E.der != null) {
+            Nodo P = BuscarPadre(R, v);
+
+            if (P.izq == E) {
+                P.izq = E.der;
+            } else {
+                P.der = E.der;
+            }
+            E.der = null;
+            return E;
+        }
+
+        //NODO CON HIJO IZQUIERDO
+        if (E.izq != null && E.der == null) {
+            Nodo P = BuscarPadre(R, v);
+
+            if (P.izq == E) {
+                P.izq = E.izq;
+            } else {
+                P.der = E.izq;
+            }
+            E.izq = null;
+            return E;
+        }
+
+        //NODO CON DOS HIJOS
+        Nodo PT = E;
+        Nodo T = E.izq;
+
+        while (T.der != null) {
+            PT = T;
+            T = T.der;
+        }
+
+        String temp = E.info;
+        E.info = T.info;
+        T.info = temp;
+
+        if (PT == E) {
+            PT.izq = T.izq;
+        } else {
+            PT.der = T.izq;
+        }
+        T.izq = null;
+        return T;
+    }
+    //Trabaja emi prepa
     public void Modificar(Nodo N, String v){
         Nodo E = Eliminar(N, v);
         if (E == null) {
@@ -69,7 +110,9 @@ public class ABB {
         } else {
             System.out.println("Ingrese el nuevo valor: ");
             String nuevoValor = Main.sc.nextLine();
-            Insertar(R, nuevoValor);
+            
+            R = Insertar(R, nuevoValor);
+            System.out.println("Palabra modificada correctamente.");
         }
     }
 
@@ -100,12 +143,22 @@ public class ABB {
     }
 
     public Nodo BuscarPadre(Nodo N, String v) {
+        if (N == null) {
+            return null;
+        }
+
         if (v.compareToIgnoreCase(N.info) < 0) {
+            if (N.izq == null) {
+                return null;
+            }
             if (v.equalsIgnoreCase(N.izq.info)) {
                 return N;
             }
             return BuscarPadre(N.izq, v);
         } else {
+            if (N.der == null) {
+                return null;
+            }
             if (v.equalsIgnoreCase(N.der.info)) {
                 return N;
             }
@@ -113,6 +166,7 @@ public class ABB {
         }
     }
 
+    //RECORRIDOS
     public void PreOrder(Nodo N){
         if (N != null) {
             System.out.println(N.info);

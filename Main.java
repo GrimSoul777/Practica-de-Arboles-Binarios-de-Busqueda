@@ -93,13 +93,13 @@ public class Main {
                     } else {
                         System.out.println("Ingresa la palabra que deseas eliminar:");
                         String elim = sc.nextLine();
+                        
                         if (arbol.Eliminar(arbol.R, elim) != null){
                             System.out.println("\nPalabra eliminada correctamente.");
                         }
                         else {
                             System.out.println("\nLa palabra NO existe en el arbol (no se elimino nada)");
                         }
-
                     }
                 break;
 
